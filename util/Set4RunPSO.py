@@ -83,7 +83,7 @@ class Set4RunPSO:
 		PSO_opt = PSO(self.particle, self.dim, self.bounded, self.data_x, self.data_y, self.fitfunction, self.debug)
 		if self.debug:
 			print('[debug][Set4RunPSO][RunPSO] Finish PSO parameter setting.')
-		X, V, pbest, pbest_fit, gbest_fit, gbest = PSO_opt.init_Population()
+		X, V, pbest, pbest_fit, gbest_fit, self.gbest = PSO_opt.init_Population()
 		if self.debug:
 			print('[debug][Set4RunPSO][RunPSO] Finish PSO initialization.')
 		fitness = np.zeros(self.iteration)
@@ -93,7 +93,7 @@ class Set4RunPSO:
 			w = wmin + (self.iteration-tt)/self.iteration*(wmax-wmin)
 			c1 = c1min + (self.iteration-tt)/self.iteration*(c1max-c1min)
 			c2 = c2max + (self.iteration-tt)/self.iteration*(c2min-c2max)
-			X, V, gbest, pbest, pbest_fit, gbest_fit = PSO_opt.iterator(w, c1, c2, X, V, pbest, gbest, pbest_fit, gbest_fit)
+			X, V, self.gbest, pbest, pbest_fit, gbest_fit = PSO_opt.iterator(w, c1, c2, X, V, pbest, self.gbest, pbest_fit, gbest_fit)
 			fitness[tt] = gbest_fit
 			if fitness[tt] < fitness[tt -1]:
 				print(f'[Set4RunPSO][RunPSO][gbest update] iteration={tt+1}, loss={fitness[tt]}')
@@ -104,4 +104,9 @@ class Set4RunPSO:
 		if self.debug:
 			print(f'[debug][Set4RunPSO][RunPSO] cost time: {(time_end - time_start):.4f}')
 
-		return gbest
+
+	def TestPSO(self, data):
+		# calculate test ouput base on trained gbest
+		if self.debug:
+			print('[debug][Set4RunPSO][TestPSO] calculate test result...')
+		return self.NN(self.gbest, data)
