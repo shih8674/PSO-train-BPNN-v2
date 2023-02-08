@@ -16,7 +16,7 @@ input_size, train_x, train_y, val_x, test_x, val_y, test_y = LoadData(DataPath['
 NN_structure = [input_size, NN_para['hid_kernel'], NN_para['out_kernel']]
 
 # set and run PSO
-PSONN = Set4RunPSO(NN_structure, PSO_para['iteration'], PSO_para['bounded'], PSO_para['update_para'], train_x, train_y, PSO_para['particle'], debug=True)
+PSONN = Set4RunPSO(train_x, train_y, NN_structure, PSO_para['iteration'], PSO_para['bounded'], PSO_para['update_para'], PSO_para['particle'], debug=True)
 PSONN.RunPSO()
 
 # calculate reuslt base on trained PSO gbest
