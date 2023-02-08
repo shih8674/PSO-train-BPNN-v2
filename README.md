@@ -23,7 +23,7 @@ The result of traditional NN set up by keras can find in previous project 'PSO-t
 	        Set4RunPSO.py => Set fittness function for PSO (ParticleSwarmOpt.py)
 			         Set PSO process for training (RunPSO) and testing (TestPSO).
 	
-	 main.py => call function from util and run PSO-NN based on the parameter set by user.
+    main.py => call function from util and run PSO-NN based on the parameter set by user.
 
 When the 'main.py' run, the console will represent the number of epoch, the error of val data, the error of test data, and cost time per epoch.
 
