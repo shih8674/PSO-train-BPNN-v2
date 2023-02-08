@@ -1,7 +1,6 @@
 # PSO-train-BP-NN v2
 
 ## Code Description
-========================
 
 This project optimize the code in 'PSO-train-BP-NN'
 
@@ -31,7 +30,6 @@ If the debug setting in main.py is ture, more detail messages are shown during t
 
 
 ## Data Description
-========================
 
 The data is air quality index download from Environmental Protection Administration Executive Yuan, R.O.C. (Taiwan). (https://data.epa.gov.tw/dataset/aqx_p_13)
 
