@@ -5,23 +5,17 @@ import pandas as pd
 import numpy as np
 from util.LoadData import LoadData
 from util.Set4RunPSO import Set4RunPSO
+from util.ParameterSetting import DataPath, PSO_para, NN_para
 np.seterr(divide='ignore', invalid='ignore')
 
 
 # load data
-input_size, train_x, val_test_x, train_y, val_test_y, val_x, test_x, val_y, test_y = LoadData('./data/space_train/train_space_AQI_2.csv')
+input_size, train_x, train_y, val_x, test_x, val_y, test_y = LoadData(DataPath['LoadPath'])
 
-hid_kernel = 6
-out_kernel = 1
-NN_structure = [input_size, hid_kernel, out_kernel]
-update_para = { 'wmin':0.02 ,
-				'wmax':1    , 
-				'c1min':0.05,
-				'c1max':1.2 ,
-				'c2min':0.05,
-				'c2max':1.2  }
-bounded = 0.85
-iteration = 30
+# set NN structure
+NN_structure = [input_size, NN_para['hid_kernel'], NN_para['out_kernel']]
 
-PSONN = Set4RunPSO(NN_structure, iteration, bounded, update_para, train_x, train_y, particle=-0.1, debug=True)
-gbest = PSONN.RunPSO()
+# set and run PSO
+PSONN = Set4RunPSO(NN_structure, PSO_para['iteration'], PSO_para['bounded'], PSO_para['update_para'], train_x, train_y, PSO_para['particle'], debug=True)
+PSONN.RunPSO()
+test_result = PSONN.TestPSO(val_x)
