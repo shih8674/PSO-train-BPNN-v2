@@ -1,12 +1,13 @@
 from util.ParticleSwarmOpt import PSO
 from util.ActivationFunc import ActFunc
 from util.LossFunc import LossFunc
+from util.ParameterSetting import PSO_para, NN_para
 import time
 import numpy as np
 
 
 class Set4RunPSO:
-	def __init__(self, NN_structure, iteration, bounded, update_para, data_x, data_y, particle=-3, debug=False):
+	def __init__(self, data_x, data_y, NN_structure, iteration, bounded, update_para, particle=-3, debug=False):
 		self.NN_structure = NN_structure
 		self.iteration = iteration
 		self.dim = NN_structure[0]*NN_structure[1] + NN_structure[1] + NN_structure[1]*NN_structure[2] + NN_structure[2]
@@ -51,7 +52,8 @@ class Set4RunPSO:
 			hid_temp = fit_w * input_x
 			hid_result = np.zeros(hid_num)
 			for hid_count in range(hid_num):
-				hid_result[hid_count] = ActFunc.relu(np.sum(hid_temp[hid_count*in_num : (hid_count*in_num) + in_num]) + fit_wbias[hid_count])
+				# hid_result[hid_count] = ActFunc.relu(np.sum(hid_temp[hid_count*in_num : (hid_count*in_num) + in_num]) + fit_wbias[hid_count])
+				hid_result[hid_count] = NN_para['ActivationFunc'](np.sum(hid_temp[hid_count*in_num : (hid_count*in_num) + in_num]) + fit_wbias[hid_count])
 
 			output_temp = fit_v * hid_result        
 			data_result[input_count] = np.sum(output_temp + fit_vbias)
@@ -65,7 +67,8 @@ class Set4RunPSO:
 		val_y = np.zeros(train_y.shape)
 		val_y[:] = train_y[:]
 
-		fittness = LossFunc.MAPE(output_y.flatten(), val_y)
+		# fittness = LossFunc.MAPE(output_y.flatten(), val_y)
+		fittness = PSO_para['LossFunc'](output_y.flatten(), val_y)
 
 		return fittness
 

@@ -14,4 +14,4 @@ def LoadData(path):
 	train_x, val_test_x, train_y, val_test_y = train_test_split(X_row, Y_row, test_size = 0.3, shuffle = True)
 	val_x, test_x, val_y, test_y = train_test_split(val_test_x, val_test_y, test_size = 0.5, shuffle = True)
 
-	return input_size, train_x, val_test_x, train_y, val_test_y, val_x, test_x, val_y, test_y
+	return input_size, train_x, train_y, val_x, test_x, val_y, test_y

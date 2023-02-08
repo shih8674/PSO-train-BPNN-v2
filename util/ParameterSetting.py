@@ -1,3 +1,7 @@
+from util.LossFunc import LossFunc
+from util.ActivationFunc import ActFunc
+
+
 DataPath = {'LoadPath':'./data/space_train/train_space_AQI_2.csv'
 		     }
 
@@ -9,9 +13,11 @@ PSO_para = {'update_para':{ 'wmin':0.02 ,
 							'c2max':1.2  }, 
 			'bounded':0.85, 
 			'iteration':2, 
-			'particle':-0.1
+			'particle':-0.1, 
+			'LossFunc':LossFunc.MAPE
 			}
 
 NN_para = {'hid_kernel':8, 
-		   'out_kernel':1
+		   'out_kernel':1, 
+		   'ActivationFunc':ActFunc.relu
 		   }
