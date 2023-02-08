@@ -1,6 +1,6 @@
 # PSO-train-BP-NN v2
 ========================
-Code Description
+##Code Description
 ========================
 
 This project optimize the code in 'PSO-train-BP-NN'
@@ -11,9 +11,9 @@ If you only want to see the training process and result, 'main.py' can run direc
 
 The result of traditional NN set up by keras can find in previous project 'PSO-train-BP-NN'
 
-code structure:
-	util -> 
-			ParameterSetting.py => Set all parameter, including data path, PSO parameters, and NN parameters.
+###code structure:
+
+    util -> ParameterSetting.py => Set all parameter, including data path, PSO parameters, and NN parameters.
 								   Detail parameters description show in the file. 
 								   User can change the setting in this file.
 			LoadData.py => Process the data loading from 'ParameterSetting.py'. 					   
@@ -29,8 +29,8 @@ code structure:
 When the 'main.py' run, the console will represent the number of epoch, the error of val data, the error of test data, and cost time per epoch.
 If the debug setting in main.py is ture, more detail messages are shown during training process.
 
-========================
-Data Description
+
+##Data Description
 ========================
 
 The data is air quality index download from Environmental Protection Administration Executive Yuan, R.O.C. (Taiwan). (https://data.epa.gov.tw/dataset/aqx_p_13)
