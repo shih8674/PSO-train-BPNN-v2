@@ -18,4 +18,6 @@ NN_structure = [input_size, NN_para['hid_kernel'], NN_para['out_kernel']]
 # set and run PSO
 PSONN = Set4RunPSO(NN_structure, PSO_para['iteration'], PSO_para['bounded'], PSO_para['update_para'], train_x, train_y, PSO_para['particle'], debug=True)
 PSONN.RunPSO()
-test_result = PSONN.TestPSO(val_x)
+
+# calculate reuslt base on trained PSO gbest
+test_result = PSONN.TestPSO(test_x)
