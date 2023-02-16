@@ -52,7 +52,6 @@ class Set4RunPSO:
 			hid_temp = fit_w * input_x
 			hid_result = np.zeros(hid_num)
 			for hid_count in range(hid_num):
-				# hid_result[hid_count] = ActFunc.relu(np.sum(hid_temp[hid_count*in_num : (hid_count*in_num) + in_num]) + fit_wbias[hid_count])
 				hid_result[hid_count] = NN_para['ActivationFunc'](np.sum(hid_temp[hid_count*in_num : (hid_count*in_num) + in_num]) + fit_wbias[hid_count])
 
 			output_temp = fit_v * hid_result        
@@ -67,7 +66,6 @@ class Set4RunPSO:
 		val_y = np.zeros(train_y.shape)
 		val_y[:] = train_y[:]
 
-		# fittness = LossFunc.MAPE(output_y.flatten(), val_y)
 		fittness = PSO_para['LossFunc'](output_y.flatten(), val_y)
 
 		return fittness
@@ -81,7 +79,8 @@ class Set4RunPSO:
 		c1max = self.update_para['c1max']
 		c2min = self.update_para['c2min']
 		c2max = self.update_para['c2max']
-
+        
+		time_record = time.strftime("%m-%d_%H-%M-%S")
 		time_start = time.time()
 		PSO_opt = PSO(self.particle, self.dim, self.bounded, self.data_x, self.data_y, self.fitfunction, self.debug)
 		if self.debug:
@@ -89,19 +88,20 @@ class Set4RunPSO:
 		X, V, pbest, pbest_fit, gbest_fit, self.gbest = PSO_opt.init_Population()
 		if self.debug:
 			print('[debug][Set4RunPSO][RunPSO] Finish PSO initialization.')
-		fitness = np.zeros(self.iteration)
+		self.fitness = np.zeros(self.iteration +1)
+		self.fitness[0] = gbest_fit
 		for tt in range(self.iteration):
 			if tt%10 == 0:
 				print(f'[Set4RunPSO][RunPSO] iteration: {tt:05d}')
 			w = wmin + (self.iteration-tt)/self.iteration*(wmax-wmin)
 			c1 = c1min + (self.iteration-tt)/self.iteration*(c1max-c1min)
 			c2 = c2max + (self.iteration-tt)/self.iteration*(c2min-c2max)
-			X, V, self.gbest, pbest, pbest_fit, gbest_fit = PSO_opt.iterator(w, c1, c2, X, V, pbest, self.gbest, pbest_fit, gbest_fit)
-			fitness[tt] = gbest_fit
-			if fitness[tt] < fitness[tt -1]:
-				print(f'[Set4RunPSO][RunPSO][gbest update] iteration={tt+1}, loss={fitness[tt]}')
+			X, V, self.gbest, pbest, pbest_fit, gbest_fit = PSO_opt.iterator(w, c1, c2, X, V, pbest, self.gbest, pbest_fit, gbest_fit, time_record)
+			self.fitness[tt +1] = gbest_fit
+			if self.fitness[tt +1] < self.fitness[tt]:
+				print(f'[Set4RunPSO][RunPSO][gbest update] iteration={tt+1}, loss={self.fitness[tt]}')
 				print('--------------------------------------')
-			if fitness[tt] < 0.00000001:
+			if self.fitness[tt +1] < 0.00000001:
 				break
 		time_end = time.time()
 		if self.debug:

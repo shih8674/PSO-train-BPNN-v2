@@ -1,5 +1,5 @@
 import numpy as np
-
+import time
 
 class PSO:
     '''
@@ -47,7 +47,7 @@ class PSO:
             print('[debug][ParticleSwarmOpt][init_Population] initialization ready')
         return X, V, pbest, pbest_fit, gbest_fit, gbest
     
-    def iterator(self, w, c1, c2, X, V, pbest, gbest, pbest_fit, gbest_fit):
+    def iterator(self, w, c1, c2, X, V, pbest, gbest, pbest_fit, gbest_fit, time_record):
         rand1 = np.random.uniform(0, 1, (self.particle, 1))
         rand2 = np.random.uniform(0, 1, (self.particle, 1))
         # update rule in PSO
@@ -68,6 +68,7 @@ class PSO:
             if(pbest_fit[i] < gbest_fit):    # update gbest and gbest_fit
                 gbest = pbest[i, :]
                 gbest_fit = pbest_fit[i]
+                np.save(f'./result/gbest/parameter_record_{time_record}.npy', gbest)
                 if self.debug:
                     print(f'[debug][ParticleSwarmOpt][iterator] particle [{i:03d}] update gbest, gbest: {gbest_fit:.6f}')
                 
